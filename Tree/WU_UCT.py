@@ -93,15 +93,15 @@ class WU_UCT():
         rewards = []
         times = []
 
-        game_start_time = time.clock()
+        game_start_time = time.process_time()
 
         logging.info("Start simulation")
 
         while not done and (max_episode_length == -1 or step_count < max_episode_length):
             # Plan a best action under the current state
-            simulation_start_time = time.clock()
+            simulation_start_time = time.process_time()
             action = self.simulate_single_move(state)
-            simulation_end_time = time.clock()
+            simulation_end_time = time.process_time()
 
             # Interact with the environment
             next_state, reward, done = self.wrapped_env.step(action)
@@ -123,7 +123,7 @@ class WU_UCT():
             state = next_state
             step_count += 1
 
-        game_end_time = time.clock()
+        game_end_time = time.process_time()
         print("> game ended. total reward: {}, used time {} s".format(accu_reward, game_end_time - game_start_time))
         logging.info("> game ended. total reward: {}, used time {} s".format(accu_reward,
             game_end_time - game_start_time))

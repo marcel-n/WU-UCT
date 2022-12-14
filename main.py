@@ -97,6 +97,7 @@ def main():
 
 if __name__ == "__main__":
     # Mandatory for Unix/Darwin
-    multiprocessing.set_start_method("forkserver")
+    # multiprocessing.set_start_method("forkserver")
+    multiprocessing.set_start_method("spawn")
 
     main()

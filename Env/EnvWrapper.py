@@ -11,16 +11,16 @@ class EnvWrapper():
 
         self.env_type = None
 
-        try:
-            self.env, self.recorder = make_atari_env(env_name, 0, 0, enable_record = enable_record,
-                                                     record_path = record_path)
+        # try:
+        self.env, self.recorder = make_atari_env(env_name, 0, 0, enable_record = enable_record,
+                                                    record_path = record_path)
 
-            # Call reset to avoid gym bugs.
-            self.env.reset()
+        # Call reset to avoid gym bugs.
+        self.env.reset()
 
-            self.env_type = "Atari"
-        except gym.error.Error:
-            exit(1)
+        self.env_type = "Atari"
+        # except gym.error.Error:
+        #     exit(1)
 
         assert isinstance(self.env.action_space, gym.spaces.Discrete), "Should be discrete action space."
         self.action_n = self.env.action_space.n
@@ -40,7 +40,7 @@ class EnvWrapper():
         return state
 
     def step(self, action):
-        next_state, reward, done, _ = self.env.step(action)
+        next_state, reward, done, *_ = self.env.step(action)
 
         self.current_step_count += 1
         if self.current_step_count >= self.max_episode_length:
